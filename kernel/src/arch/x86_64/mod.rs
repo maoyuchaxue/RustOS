@@ -2,6 +2,7 @@ extern crate bootloader;
 
 use self::bootloader::bootinfo::{BootInfo, MemoryRegionType};
 
+pub mod consts;
 pub mod driver;
 pub mod cpu;
 pub mod interrupt;

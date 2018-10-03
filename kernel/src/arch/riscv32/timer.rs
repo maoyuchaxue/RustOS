@@ -6,6 +6,8 @@
 use super::riscv::register::*;
 use super::bbl::sbi;
 
+use consts::TIME_BASE;
+
 #[cfg(target_pointer_width = "64")]
 pub fn get_cycle() -> u64 {
     time::read() as u64
@@ -33,8 +35,7 @@ pub fn init() {
 
 pub fn set_next() {
     // 100Hz @ QEMU
-    let timebase = 250000;
-    set_timer(get_cycle() + timebase);
+    set_timer(get_cycle() + TIME_BASE);
 }
 
 fn set_timer(t: u64) {

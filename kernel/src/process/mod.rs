@@ -1,3 +1,6 @@
+//! Process management module.
+//! Scheduler/Thread models are implemented in ucore_process crate.
+
 use spin::Once;
 use sync::{SpinNoIrqLock, Mutex, MutexGuard, SpinNoIrq};
 pub use self::context::Context;
@@ -9,6 +12,7 @@ mod context;
 
 type Processor = Processor_<Context, StrideScheduler>;
 
+/// Inits processor and adds an idle kernel thread.
 pub fn init() {
     PROCESSOR.call_once(||
         SpinNoIrqLock::new({
@@ -29,6 +33,7 @@ pub fn init() {
 
 pub static PROCESSOR: Once<SpinNoIrqLock<Processor>> = Once::new();
 
+/// The only way to get processor.
 pub fn processor() -> MutexGuard<'static, Processor, SpinNoIrq> {
     PROCESSOR.try().unwrap().lock()
 }

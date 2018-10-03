@@ -1,3 +1,5 @@
+//! filesystem support (unfinished)
+
 use simple_filesystem::*;
 use alloc::boxed::Box;
 #[cfg(target_arch = "x86_64")]

@@ -8,6 +8,8 @@ pub use self::x86_64::*;
 pub const MAX_CPU_NUM: usize = 8;
 pub const MAX_PROCESS_NUM: usize = 48;
 
+pub const STACK_SIZE: usize = 0x8000;
+
 #[cfg(target_arch = "riscv32")]
 mod riscv {
     // Physical address available on THINPAD:

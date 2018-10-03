@@ -1,14 +1,22 @@
+//! Context definitions used by processor.
+
 use arch::interrupt::{TrapFrame, Context as ArchContext};
 use memory::{MemoryArea, MemoryAttr, MemorySet};
 use xmas_elf::{ElfFile, header, program::{Flags, ProgramHeader, Type}};
 use core::fmt::{Debug, Error, Formatter};
 
+/// Context data to be saved during process switching.
+/// Including:
+///     + arch: arch-dependent context data;
+///     + memory_set: memory info (memory areas, page table, kernel stack)
 pub struct Context {
     arch: ArchContext,
     memory_set: MemorySet,
 }
 
 impl ::ucore_process::processor::Context for Context {
+    /// Switch to another context. 
+    /// Switch logic is mainly implemented in arch::Context.
     unsafe fn switch(&mut self, target: &mut Self) {
         super::PROCESSOR.try().unwrap().force_unlock();
         self.arch.switch(&mut target.arch);
@@ -16,6 +24,7 @@ impl ::ucore_process::processor::Context for Context {
         forget(super::processor());
     }
 
+    /// Create a new context for a kernel thread.
     fn new_kernel(entry: extern fn(usize) -> !, arg: usize) -> Self {
         let ms = MemorySet::new();
         Context {
@@ -123,6 +132,7 @@ impl Debug for Context {
     }
 }
 
+/// Construct memory area & page table from elf file.
 fn memory_set_from<'a>(elf: &'a ElfFile<'a>) -> MemorySet {
     let mut set = MemorySet::new();
     for ph in elf.program_iter() {
@@ -138,6 +148,7 @@ fn memory_set_from<'a>(elf: &'a ElfFile<'a>) -> MemorySet {
     set
 }
 
+/// Extract memory area attributes from elf prog header
 fn memory_attr_from(elf_flags: Flags) -> MemoryAttr {
     let mut flags = MemoryAttr::default().user();
     // TODO: handle readonly

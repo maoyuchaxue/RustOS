@@ -60,6 +60,9 @@ pub mod arch;
 #[path = "arch/riscv32/mod.rs"]
 pub mod arch;
 
+/// Kernel thread main function.
+/// Will be called after memory/driver/hardware initialization.
+/// inits processor in ucore_process, and executes user program(hardcoded as fs::shell).
 pub fn kmain() -> ! {
     process::init();
     unsafe { arch::interrupt::enable(); }

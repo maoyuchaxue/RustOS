@@ -1,17 +1,24 @@
+//! Platform independent trap handler functions
+
 use process::*;
 use arch::interrupt::TrapFrame;
 
+/// Called in timer interrupt.
 pub fn timer() {
     let mut processor = processor();
     processor.tick();
 }
 
+/// Called before return from interrupt handler.
 pub fn before_return() {
     if let Some(processor) = PROCESSOR.try() {
         processor.lock().schedule();
     }
 }
 
+/// Called when a error occured in interrupt handler.
+/// Argument: 
+///     * tf: the TrapFrame in stack when the error occurs
 pub fn error(tf: &TrapFrame) -> ! {
     if let Some(processor) = PROCESSOR.try() {
         let mut processor = processor.lock();

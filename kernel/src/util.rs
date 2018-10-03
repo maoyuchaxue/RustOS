@@ -1,3 +1,5 @@
+//! Useful utils.
+
 use core::fmt::Debug;
 
 /// Convert C string to Rust string

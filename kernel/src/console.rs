@@ -1,3 +1,5 @@
+//! Console io helpers.
+
 use core::ops::Deref;
 use alloc::string::String;
 use arch::io::getchar;

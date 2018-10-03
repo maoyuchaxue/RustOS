@@ -1,3 +1,5 @@
+//! QEMU related functions, currently unused
+
 /// Exit qemu
 /// See: https://wiki.osdev.org/Shutdown
 /// Must run qemu with `-device isa-debug-exit`

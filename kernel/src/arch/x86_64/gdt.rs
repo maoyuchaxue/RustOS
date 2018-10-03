@@ -1,3 +1,5 @@
+//! Sets GDT/TSS.
+
 use alloc::boxed::Box;
 use arch::driver::apic::lapic_id;
 use consts::MAX_CPU_NUM;

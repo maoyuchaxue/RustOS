@@ -66,6 +66,7 @@ fn sys_fork(tf: &TrapFrame) -> i32 {
 }
 
 /// Wait the process exit.
+/// 
 /// Return the PID. Store exit code to `code` if it's not null.
 fn sys_wait(pid: usize, code: *mut i32) -> i32 {
     let mut processor = processor();

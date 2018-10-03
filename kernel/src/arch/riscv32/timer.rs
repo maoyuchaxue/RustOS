@@ -1,3 +1,8 @@
+//! Timer related functions.
+//! 
+//! See [riscv privileged spec 1.10](https://riscv.org/specifications/privileged-isa/) 
+//! 3.1.15 Machine Timer Registers (mtime and mtimecmp) for details.
+
 use super::riscv::register::*;
 use super::bbl::sbi;
 

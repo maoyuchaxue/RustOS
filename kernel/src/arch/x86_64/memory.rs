@@ -1,3 +1,5 @@
+//! Memory initialization.
+
 use bit_allocator::BitAlloc;
 use consts::KERNEL_OFFSET;
 // Depends on kernel

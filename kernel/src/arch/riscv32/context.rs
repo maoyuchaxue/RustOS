@@ -1,3 +1,5 @@
+//! Trapframe and context definitions.
+
 use super::super::riscv::register::*;
 
 #[derive(Debug, Clone)]

@@ -1,3 +1,5 @@
+//! Memory initialization.
+
 use core::slice;
 use memory::{active_table, FRAME_ALLOCATOR, init_heap, MemoryArea, MemoryAttr, MemorySet, Stack};
 use super::riscv::{addr::*, register::sstatus};
@@ -33,6 +35,7 @@ fn init_frame_allocator() {
     }
 }
 
+/// map kernel datas in page table and activate new page table.
 fn remap_the_kernel() {
     use consts::{KERNEL_HEAP_OFFSET, KERNEL_HEAP_SIZE};
     let kstack = Stack {

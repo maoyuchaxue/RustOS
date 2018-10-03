@@ -17,8 +17,10 @@ pub fn before_return() {
 }
 
 /// Called when a error occured in interrupt handler.
+/// 
 /// Argument: 
-///     * tf: the TrapFrame in stack when the error occurs
+/// 
+/// + `tf`: the TrapFrame in stack when the error occurs
 pub fn error(tf: &TrapFrame) -> ! {
     if let Some(processor) = PROCESSOR.try() {
         let mut processor = processor.lock();

@@ -1,3 +1,5 @@
+//! x64_64 interrupt handler implementation.
+
 use x86_64;
 use arch::driver::{apic::IOAPIC, pic};
 

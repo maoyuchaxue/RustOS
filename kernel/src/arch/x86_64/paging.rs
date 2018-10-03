@@ -1,3 +1,5 @@
+//! x64_64 page table implementations.
+
 use bit_allocator::{BitAlloc, BitAlloc64K};
 // Depends on kernel
 use memory::{active_table, alloc_frame, alloc_stack, dealloc_frame};
@@ -38,10 +40,12 @@ impl FrameExt for Frame {
     }
 }
 
+/// Page table in use, mainly implemented by x86_64 crate.
 pub struct ActivePageTable(RecursivePageTable<'static>);
 
 pub struct PageEntry(PageTableEntry);
 
+/// PageTable trait implementation, see ucore_memory::paging.
 impl PageTable for ActivePageTable {
     type Entry = PageEntry;
 
@@ -80,6 +84,18 @@ impl ActivePageTable {
     pub unsafe fn new() -> Self {
         ActivePageTable(RecursivePageTable::new(&mut *(0xffffffff_fffff000 as *mut _)).unwrap())
     }
+
+    /// Apply a function to a currently unmapped frame.
+    /// 
+    /// Temporarily maps the frame and unmaps it after function is applied.
+    /// 
+    /// Arguments:
+    /// 
+    /// + frame: frame needed to be accessed.
+    /// 
+    /// + f: function to be applied to the frame.
+    ///
+    /// see [`InactivePageTable0`]::{new_bare, edit} as examples.
     fn with_temporary_map(&mut self, frame: &Frame, f: impl FnOnce(&mut ActivePageTable, &mut x86PageTable)) {
         // Create a temporary page
         let page = Page::of_addr(0xcafebabe);
@@ -229,6 +245,7 @@ impl InactivePageTable for InactivePageTable0 {
 }
 
 impl InactivePageTable0 {
+    /// Maps kernel space identically.
     fn map_kernel(&mut self) {
         let mut table = unsafe { &mut *(0xffffffff_fffff000 as *mut x86PageTable) };
         // Kernel at 0xffff_ff00_0000_0000
@@ -243,6 +260,7 @@ impl InactivePageTable0 {
 }
 
 impl Drop for InactivePageTable0 {
+    /// Release p4_frame after inactive page table is no longer used.
     fn drop(&mut self) {
         info!("PageTable dropping: {:?}", self);
         Self::dealloc_frame(self.p4_frame.start_address().as_u64() as usize);

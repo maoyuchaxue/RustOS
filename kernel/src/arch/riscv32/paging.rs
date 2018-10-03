@@ -1,3 +1,5 @@
+//! riscv32 page table implementations.
+
 use consts::{KERNEL_PML4, RECURSIVE_PAGE_PML4};
 // Depends on kernel
 use memory::{active_table, alloc_frame, alloc_stack, dealloc_frame};

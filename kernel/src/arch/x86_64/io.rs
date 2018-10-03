@@ -1,3 +1,5 @@
+//! getchar, print implementations.
+
 use super::driver::serial::*;
 use core::fmt::{Arguments, Write};
 

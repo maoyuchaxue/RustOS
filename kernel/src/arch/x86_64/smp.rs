@@ -1,3 +1,5 @@
+//! SMP startup support. (unused)
+
 use arch::driver::{acpi::AcpiResult, apic::start_ap};
 use consts::MAX_CPU_NUM;
 use core::ptr::{read_volatile, write_volatile};

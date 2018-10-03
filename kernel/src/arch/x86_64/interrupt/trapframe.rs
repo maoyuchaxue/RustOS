@@ -1,3 +1,5 @@
+//! Trapframe and context definitions.
+
 #[derive(Debug, Clone, Default)]
 #[repr(C)]
 pub struct TrapFrame {

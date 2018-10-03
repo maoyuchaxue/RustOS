@@ -1,3 +1,5 @@
+//! riscv32 interrupt handler implementation.
+
 use super::riscv::register::*;
 pub use self::context::*;
 

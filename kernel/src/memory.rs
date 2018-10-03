@@ -54,8 +54,10 @@ pub fn active_table() -> MutexGuard<'static, CowExt<ActivePageTable>> {
 }
 
 /// Platform independent page fault handler.
-/// calls pf handler in ucore memory crate
-/// Return true to continue, false to halt
+/// 
+/// Calls pf handler in ucore memory crate.
+/// 
+/// Return true to continue, false to halt.
 pub fn page_fault_handler(addr: usize) -> bool {
     // Handle copy on write
     unsafe { ACTIVE_TABLE.force_unlock(); }

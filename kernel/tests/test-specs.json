@@ -164,6 +164,21 @@
             "expected-lines": [
                 "sleepkill pass."
             ]
+        },
+        {
+            "name": "badarg",
+            "expected-lines": [
+                "fork ok.",
+                "badarg pass."
+            ]
+        },
+        {
+            "name": "testbss",
+            "expected-lines": [
+                "Making sure bss works right...",
+                "Yes, good.  Now doing a wild write off the end...",
+                "testbss may pass."
+            ]
         }        
     ]
 }

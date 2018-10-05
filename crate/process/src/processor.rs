@@ -1,3 +1,5 @@
+//! Process manager implementation.
+
 use alloc::{boxed::Box, collections::BTreeMap};
 use scheduler::*;
 use event_hub::EventHub;
@@ -29,6 +31,7 @@ pub trait Context: Debug {
     fn new_kernel(entry: extern fn(usize) -> !, arg: usize) -> Self;
 }
 
+/// Process manager.
 pub struct Processor_<T: Context, S: Scheduler> {
     procs: BTreeMap<Pid, Process<T>>,
     current_pid: Pid,

@@ -1,3 +1,5 @@
+//! Event priority queue implementation.
+
 use alloc::collections::BinaryHeap;
 use core::cmp::{Ordering, PartialOrd};
 
@@ -28,6 +30,7 @@ impl<T> Ord for Timer<T> {
     }
 }
 
+/// A Heap recording all timers, ordered by time.
 pub struct EventHub<T> {
     tick: Time,
     timers: BinaryHeap<Timer<T>>,
@@ -43,6 +46,8 @@ impl<T> EventHub<T> {
     pub fn tick(&mut self) {
         self.tick += 1;
     }
+
+    /// If a timer is counted to 0, pop the event up.
     pub fn pop(&mut self) -> Option<T> {
         match self.timers.peek() {
             None => return None,
@@ -51,6 +56,8 @@ impl<T> EventHub<T> {
         };
         self.timers.pop().map(|t| t.data)
     }
+
+    /// Add a new event.
     pub fn push(&mut self, time_after: Time, data: T) {
         let time = self.tick + time_after;
         self.timers.push(Timer { time, data });

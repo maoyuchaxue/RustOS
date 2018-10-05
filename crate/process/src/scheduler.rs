@@ -1,19 +1,31 @@
+//! Schedule algorithms implementation.
+
 use alloc::{collections::BinaryHeap, vec::Vec};
 
 type Pid = usize;
 
-///
+/// Decides what process should be executed next.
 pub trait Scheduler {
+    /// Adds a new process.
     fn insert(&mut self, pid: Pid);
+
+    /// Removes a process.
     fn remove(&mut self, pid: Pid);
+
+    /// Finds and returns a victim process.
     fn select(&mut self) -> Option<Pid>;
-    fn tick(&mut self, current: Pid) -> bool;   // need reschedule?
+
+    /// Called in timer interrupts, returns whether current process needs to be rescheduled.
+    fn tick(&mut self, current: Pid) -> bool;
+
+    /// Set priority for a process.
     fn set_priority(&mut self, pid: Pid, priority: u8);
 }
 
 pub use self::rr::RRScheduler;
 pub use self::stride::StrideScheduler;
 
+/// Implementation of Round-Robin scheduler.
 mod rr {
     use super::*;
 
@@ -106,6 +118,7 @@ mod rr {
     }
 }
 
+/// Implementation of Stride scheduler.
 mod stride {
     use super::*;
 

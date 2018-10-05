@@ -6,17 +6,13 @@
         {
             "name": "hello",
             "expected-lines": [
-                "hello",
-                "Hello world!!.",
-                "I am process 2.",
-                "hello pass."
+                "hello\r\nHello world!!.\r\nI am process 2.\r\nhello pass."
             ]
         },
         {
             "name": "matrix",
             "expected-lines": [
-                "matrix pass.",
-                "matrix not pass."
+                "matrix pass."
             ]
         },
         {
@@ -28,6 +24,146 @@
                 "kill parent ok.",
                 "kill child1 ok."
             ]
-        }
+        },
+        {
+            "name": "sleep",
+            "expected-lines": [
+                "sleep 1 x 100 slices.",
+                "sleep 2 x 100 slices.",
+                "sleep 3 x 100 slices.",
+                "sleep 4 x 100 slices.",
+                "sleep 5 x 100 slices.",
+                "sleep 6 x 100 slices.",
+                "sleep 7 x 100 slices.",
+                "sleep 8 x 100 slices.",
+                "sleep 9 x 100 slices.",
+                "sleep 10 x 100 slices.",
+                "use .* msecs.",
+                "sleep pass."
+            ]
+        },
+        {
+            "name": "spin",
+            "expected-lines": [
+                "I am the parent. Forking the child...",
+                "I am the parent. Running the child...",
+                "I am the child. spinning ...",
+                "I am the parent.  Killing the child...",
+                "kill returns 0",
+                "wait returns 0",
+                "spin may pass."
+            ]
+        },
+        {
+            "name": "forktest",
+            "expected-lines": [
+                "I am child 3",
+                "I am child 2",
+                "I am child 1",
+                "I am child 0",
+                "I am child 8",
+                "I am child 7",
+                "I am child 6",
+                "I am child 5",
+                "I am child 4",
+                "I am child 13",
+                "I am child 12",
+                "I am child 11",
+                "I am child 10",
+                "I am child 9",
+                "I am child 18",
+                "I am child 17",
+                "I am child 16",
+                "I am child 15",
+                "I am child 14",
+                "I am child 23",
+                "I am child 22",
+                "I am child 21",
+                "I am child 20",
+                "I am child 19",
+                "I am child 28",
+                "I am child 27",
+                "I am child 26",
+                "I am child 25",
+                "I am child 24",
+                "I am child 31",
+                "I am child 30",
+                "I am child 29",
+                "forktest pass."
+            ]
+        },
+        {
+            "name": "forktree",
+            "expected-lines": [
+                "forktree process will sleep 400 ticks",
+                "....: I am ''",
+                "....: I am '1'",
+                "....: I am '11'",
+                "....: I am '111'",
+                "....: I am '1111'",
+                "....: I am '1110'",
+                "....: I am '110'",
+                "....: I am '1101'",
+                "....: I am '1100'",
+                "....: I am '0'",
+                "....: I am '01'",
+                "....: I am '011'",
+                "....: I am '0111'",
+                "....: I am '0110'",
+                "....: I am '010'",
+                "....: I am '0101'",
+                "....: I am '0100'",
+                "....: I am '00'",
+                "....: I am '001'",
+                "....: I am '0011'",
+                "....: I am '0010'",
+                "....: I am '000'",
+                "....: I am '0001'",
+                "....: I am '0000'",
+                "....: I am '10'",
+                "....: I am '100'",
+                "....: I am '1001'",
+                "....: I am '1000'",
+                "....: I am '101'",
+                "....: I am '1011'",
+                "....: I am '1010'"
+            ]
+        },
+        {
+            "name": "yield",
+            "expected-lines": [
+                "Hello, I am process 2.",
+                "Back in process ., iteration 0.",
+                "Back in process ., iteration 1.",
+                "Back in process ., iteration 2.",
+                "Back in process ., iteration 3.",
+                "Back in process ., iteration 4.",
+                "All done in process 2.",
+                "yield pass."
+            ]
+        },
+        {
+            "name": "exit",
+            "expected-lines": [
+                "I am the parent. Forking the child...",
+                "I am parent, fork a child pid .",
+                "I am the parent, waiting now..",
+                "I am the child.",
+                "waitpid . ok.",
+                "exit pass."
+            ]
+        },
+        {
+            "name": "priority",
+            "expected-lines": [
+                "stride sched correct result: 1 2 3 4 5"
+            ]
+        },
+        {
+            "name": "sleepkill",
+            "expected-lines": [
+                "sleepkill pass."
+            ]
+        }        
     ]
 }

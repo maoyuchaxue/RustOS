@@ -17,7 +17,7 @@
 arch ?= riscv32
 mode ?= debug
 LOG  ?= debug
-tests ?= hello matrix waitkill
+tests ?= hello matrix waitkill sleep spin forktest forktree yield exit priority sleepkill
 
 target := $(arch)-rustos
 kernel := target/$(target)/$(mode)/ucore

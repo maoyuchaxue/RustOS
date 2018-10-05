@@ -12,11 +12,12 @@
 #   d    = int | in_asm | ...	QEMU debug info
 #   mode = debug | release
 #   LOG  = off | error | warn | info | debug | trace
-#   board 						Only available on riscv32, build without bbl, run on board
+#   board 						Only available on riscv32, build without bbl, run on board 
 
 arch ?= riscv32
 mode ?= debug
 LOG  ?= debug
+tests ?= hello matrix waitkill
 
 target := $(arch)-rustos
 kernel := target/$(target)/$(mode)/ucore
@@ -94,6 +95,11 @@ justrun:
 
 debug: $(bin)
 	@qemu-system-$(arch) $(qemu_opts) -s -S &
+
+qemu-cmd := qemu-system-$(arch) $(qemu_opts)
+
+test:
+	python tests/test.py --qemu "$(qemu-cmd)" --timeout 10 --progs $(tests)
 
 ifeq ($(arch), x86_64)
 build: kernel

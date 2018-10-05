@@ -1,0 +1,33 @@
+{
+    "general-expected-lines": [
+        ">>"
+    ],
+    "tests" : [
+        {
+            "name": "hello",
+            "expected-lines": [
+                "hello",
+                "Hello world!!.",
+                "I am process 2.",
+                "hello pass."
+            ]
+        },
+        {
+            "name": "matrix",
+            "expected-lines": [
+                "matrix pass.",
+                "matrix not pass."
+            ]
+        },
+        {
+            "name": "waitkill",
+            "expected-lines": [
+                "wait child 1.",
+                "child 1.",
+                "child 2.",
+                "kill parent ok.",
+                "kill child1 ok."
+            ]
+        }
+    ]
+}

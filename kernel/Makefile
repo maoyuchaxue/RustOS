@@ -18,7 +18,7 @@ arch ?= riscv32
 mode ?= debug
 LOG  ?= debug
 
-target := $(arch)-blog_os
+target := $(arch)-rustos
 kernel := target/$(target)/$(mode)/ucore
 bin := target/$(target)/$(mode)/kernel.bin
 bootimage := target/$(target)/bootimage.bin

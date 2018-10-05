@@ -42,8 +42,8 @@ riscv = { path = "../crate/riscv" }
 bbl = { path = "../crate/bbl" }
 
 [package.metadata.bootimage]
-default-target = "x86_64-blog_os.json"
-output = "target/x86_64-blog_os/bootimage.bin"
+default-target = "x86_64-rustos.json"
+output = "target/x86_64-rustos/bootimage.bin"
 minimum-image-size = 0      # The minimum output file size (in MiB)
 # The command invoked on `bootimage run`
 # (the "{}" will be replaced with the path to the bootable disk image)

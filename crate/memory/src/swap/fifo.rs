@@ -1,3 +1,5 @@
+//! A FIFO Swapper
+
 use alloc::collections::VecDeque;
 use super::*;
 

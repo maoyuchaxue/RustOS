@@ -1,3 +1,5 @@
+//! Page swapping module
+
 use super::*;
 use super::paging::*;
 use core::ops::{Deref, DerefMut};

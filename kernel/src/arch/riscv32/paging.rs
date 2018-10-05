@@ -35,6 +35,7 @@ pub struct ActivePageTable(RecursivePageTable<'static>);
 
 pub struct PageEntry(PageTableEntry);
 
+/// PageTable trait implementation, see ucore_memory::paging.
 impl PageTable for ActivePageTable {
     type Entry = PageEntry;
 
@@ -81,6 +82,18 @@ impl ActivePageTable {
     pub unsafe fn new() -> Self {
         ActivePageTable(RecursivePageTable::new(&mut *ROOT_PAGE_TABLE).unwrap())
     }
+
+    /// Apply a function to a currently unmapped frame.
+    /// 
+    /// Temporarily maps the frame and unmaps it after function is applied.
+    /// 
+    /// Arguments:
+    /// 
+    /// + frame: frame needed to be accessed.
+    /// 
+    /// + f: function to be applied to the frame.
+    ///
+    /// see [`InactivePageTable0`]::{new_bare, edit} as examples.
     fn with_temporary_map(&mut self, frame: &Frame, f: impl FnOnce(&mut ActivePageTable, &mut RvPageTable)) {
         // Create a temporary page
         let page = Page::of_addr(VirtAddr::new(0xcafebabe));
@@ -95,6 +108,7 @@ impl ActivePageTable {
     }
 }
 
+/// Entry trait implementation, see ucore_memory::paging.
 impl Entry for PageEntry {
     fn update(&mut self) {
         let addr = VirtAddr::new((self as *const _ as usize) << 10);
@@ -141,6 +155,7 @@ pub struct InactivePageTable0 {
     p2_frame: Frame,
 }
 
+/// InactivePageTable trait implementation, see ucore_memory::memory_set.
 impl InactivePageTable for InactivePageTable0 {
     type Active = ActivePageTable;
 
@@ -221,6 +236,7 @@ impl InactivePageTable for InactivePageTable0 {
 }
 
 impl InactivePageTable0 {
+    /// Maps kernel space.
     fn map_kernel(&mut self) {
         let table = unsafe { &mut *ROOT_PAGE_TABLE };
         let e0 = table[0x40];
@@ -235,6 +251,7 @@ impl InactivePageTable0 {
 }
 
 impl Drop for InactivePageTable0 {
+    /// Release p4_frame after inactive page table is no longer used.
     fn drop(&mut self) {
         info!("PageTable dropping: {:?}", self);
         Self::dealloc_frame(self.p2_frame.start_address().as_u32() as usize);

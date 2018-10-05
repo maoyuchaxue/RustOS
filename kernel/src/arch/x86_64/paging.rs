@@ -110,6 +110,7 @@ impl ActivePageTable {
     }
 }
 
+/// Entry trait implementation, see ucore_memory::paging.
 impl Entry for PageEntry {
     fn update(&mut self) {
         use x86_64::{VirtAddr, instructions::tlb::flush};
@@ -167,6 +168,7 @@ pub struct InactivePageTable0 {
     p4_frame: Frame,
 }
 
+/// InactivePageTable trait implementation, see ucore_memory::memory_set.
 impl InactivePageTable for InactivePageTable0 {
     type Active = ActivePageTable;
 
@@ -245,7 +247,7 @@ impl InactivePageTable for InactivePageTable0 {
 }
 
 impl InactivePageTable0 {
-    /// Maps kernel space identically.
+    /// Maps kernel space.
     fn map_kernel(&mut self) {
         let mut table = unsafe { &mut *(0xffffffff_fffff000 as *mut x86PageTable) };
         // Kernel at 0xffff_ff00_0000_0000

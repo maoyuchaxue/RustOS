@@ -1,9 +1,12 @@
+//! Helper functions/classes for address conversion.
+
 use core::ops::{Add, AddAssign};
 
 pub type VirtAddr = usize;
 pub type PhysAddr = usize;
 pub const PAGE_SIZE: usize = 1 << 12;
 
+/// Provides page number <-> virtual address conversion/
 #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Page {
     number: usize,
@@ -24,6 +27,7 @@ impl Page {
     }
 }
 
+/// Overload + for Page so that page number can be added like an usize.
 impl Add<usize> for Page {
     type Output = Self;
     fn add(self, rhs: usize) -> Self::Output {

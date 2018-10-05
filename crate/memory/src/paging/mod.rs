@@ -9,17 +9,30 @@ pub use self::mock_page_table::MockPageTable;
 #[cfg(test)]
 mod mock_page_table;
 
+/// Adaptable page table interface
 pub trait PageTable {
     type Entry: Entry;
+
+    /// Maps a page to a frame, returns corresponding page entry.
     fn map(&mut self, addr: VirtAddr, target: PhysAddr) -> &mut Self::Entry;
+
+    /// Unmap a virtual page.
     fn unmap(&mut self, addr: VirtAddr);
+
+    /// Get the page entry of a virtual address.
     fn get_entry(&mut self, addr: VirtAddr) -> &mut Self::Entry;
-    // For testing with mock
+
+    /// Get raw content in the page. Only used for testing with mock.
     fn get_page_slice_mut<'a,'b>(&'a mut self, addr: VirtAddr) -> &'b mut [u8];
+
+    /// Read data at a virtual address. Only used for testing with mock.
     fn read(&mut self, addr: VirtAddr) -> u8;
+
+    /// Write data to a virtual address. Only used for testing with mock.
     fn write(&mut self, addr: VirtAddr, data: u8);
 }
 
+/// Page entry interface
 pub trait Entry {
     /// IMPORTANT!
     /// This must be called after any change to ensure it become effective.

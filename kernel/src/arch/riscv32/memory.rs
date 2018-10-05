@@ -18,6 +18,7 @@ pub fn init() {
     init_heap();
 }
 
+/// Init FrameAllocator and add kernel heap into allocator.
 fn init_frame_allocator() {
     use bit_allocator::BitAlloc;
     use core::ops::Range;
